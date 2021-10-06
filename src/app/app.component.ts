@@ -118,5 +118,11 @@ export class AppComponent implements AfterViewInit {
 
   async share(): Promise<any> {
     // EX #15
+    const blob = await this.paintService.toBlob(this.canvas.nativeElement);
+    const file = new File([blob], 'untitled.png', {type: 'image/png'});
+    const item = {files: [file], title: 'untitled.png'};
+    if (await navigator.canShare(item)) {
+      await navigator.share(item);
+    }
   }
 }
